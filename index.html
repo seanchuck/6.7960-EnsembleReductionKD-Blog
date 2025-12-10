@@ -374,26 +374,18 @@
 					<div style="margin-bottom: 16px;">
 
 						We elect to utilize a custom Wide Residual Network architecture for our models in applying knowledge distillation
-						towards image classification tasks on the CIFAR-100 dataset. Training was performed in Google Colab with NVIDIA A100
-						Tensor Core GPUs.
+						towards image classification tasks on the CIFAR-100 dataset.
 					</div>
 
 					<div style="margin-bottom: 16px;">
 						WideResNets extend the standard ResNet by introducing a widening factor that scales the number of channels in each
 						residual block while maintaining the same depth. This allows precise control over model capacity: we produce a large,
 						high-performing teacher and a much smaller student, as well as multiple intermediate “bridge” models, all within the
-						same architectural family. This choice is particularly suitable for our distillation experiments because:
+						same architectural family. This choice is particularly suitable for our distillation experiments as it allows us to scale 
+						to create a large, continuous capacity gap that preserves the structural alignment of the model, faciliating
+						 smooth optimization while remaining consistent with established benchmarks [22].
 					</div>
-		<ul>
-			<li>It provides large capacity separation between teacher and student without changing the overall architecture</li>
-			<li>The depth parameter remains fixed, making width the primary knob for clean and continuous scaling. We scale width
-			instead of depth because widening preserves the same residual structure while increasing capacity, giving smoother
-			optimization, and more predictable scaling. Increasing width boosts representational capacity locally without increasing
-			the number of compositional transformations, which avoids the nonlinear complications that depth introduces.
-			</li>
-			<li>All models share the same residual learning behavior, which improves alignment for distillation.</li>
-			<li>WideResNet is well-established on CIFAR-100 and commonly used in KD/compression literature, enabling direct comparison.</li>
-		</ul>
+
 		<div style="margin-bottom: 16px;">
 			CIFAR-100 is an image classification dataset consisting of 60,000 natural images across 100 fine-grained object
 			categories. The large number of visually similar classes creates a recognition problem much more difficult than
@@ -416,13 +408,13 @@
 			(num_layers=10) for every model in all of our experiments. The initial Teacher and Final student models in each
 			distillation are each trained with 150 epochs, with width factors of 8 and 2, respectively.
 			<ul>
-				<li>Vanilla teacher (as described above)</li>
-				<li>Vanilla student (as described above, no distillation)</li>
-				<li>Vanilla KD: Trained via traditional KD from Vanilla Teacher (no snapshots, no TAs)</li>
-				<li>Vanilla single-stage KD: Trained via traditional single-stage KD (no snapshots). The intermediate TA trained with width
-				factor of 5.</li>
-				<li>Vanilla two-stage KD: Trained via traditional double-stage KD (no snapshots). The intermediate TAs trained at width
-				factors 6 and 4</li>
+				<li>Teacher (as described above)</li>
+				<li>Baseline No KD (as described above, no distillation)</li>
+				<li>Baseline KD: Student trained via traditional KD from Teacher (no snapshots, no TAs)</li>
+				<li>1 Snapshot Single TA: Trained via traditional single-stage KD (no snapshots). The intermediate TA trained with width
+				factor of 5</li>
+				<li>1to1 Snapshot Double TA: Trained via traditional double-stage KD (no snapshots). The intermediate TAs trained at width
+				factors of 6 and 4</li>
 
 			</ul>
 
@@ -453,22 +445,28 @@
 			ensemble to its student.
 		</div>
 
+		The following notation is used in the rest of the paper to refer to the final student models for the single-stage and two-stage distillation pipelines:
+		<ul>
+			<li>"{numberSnapshots} Snapshot Single TA": Student distilled from a single TA with {numberSnapshots} snapshots</li>
+			<li>"{numberSnapshotsOne}to{numberSnapshotsTwo} Snapshot Double TA": Student distilled from two TAs with {numberSnapshotsOne} and {numberSnapshotsTwo} snapshots, respectively</li>
+		</ul>
+
 				<h4>3.4.1 Number of TA stages (Q1.1)</h4>
 				We evaluate a single-stage and two-stage intermediate training scheme with corresponding numbers of TAs by means of the
 				following comparisons:
 
 				<ul>
-					<li>Dual-TA 3to3 Snapshots vs. Single-TA 6 Snapshots
+					<li>3to3 Snapshot Double TA vs. 6 Snapshot Single TA
 						<ul>
-							<li>Both intermediary TAs of Dual-TA trained with 3 ensembles (40 epochs each)</li>
-							<li>Lone TA in Single-TA trained with 6 ensembles (40 epochs each)</li>
+							<li>Each TA in 3to3 Snapshot Double TA trained with 40 epochs</li>
+							<li>Each TA in 6 Snapshot Single TA trained with 40 epochs</li>
 						</ul>
 					</li>
 
-					<li>Dual-TA 5to5 Snapshots vs. Single-TA 10 Snapshots
+					<li>5to5 Snapshot Double TA vs. 10 Snapshot Single TA
 						<ul>
-							<li>Both intermediary TAs of Dual-TA trained with 5 ensembles (24 epochs each)</li>
-							<li>Lone TA in Single-TA trained with 10 ensembles (24 epochs each)</li>
+							<li>Each TA in 5to5 Snapshot Double TA trained with 24 epochs</li>
+							<li>Each TA in 10 Snapshot Single TA trained with 24 epochs</li>
 						</ul>
 					</li>
 
@@ -487,12 +485,10 @@
 				different elements of the teacher model. To evaluate this hypothesis the following models are compared:
 
 				<ul>
-					<li>Single-TA Comparisons: We vary M, the number of snapshots for the sole TA. M contained in {1, 6, 8, 10}.</li>
+					<li>Single-TA Comparisons: 1 Snapshot Single TA vs. 6 Snapshot Single TA vs. 8 Snapshot Single TA vs. 10 Snapshot Single TA.</li>
 				</ul>
-				<ul>Dual-TA Comparisons: Defining the pipeline as {TA1numEnsembles}to{TA2numEnsembles}:
-					<ul>
-						<li>We compare the 1to1, 3to3 and 5to5 Snapshot pipelines</li>
-					</ul>
+				<ul>
+					<li>Double-TA Comparisons: 1to1 Snapshot Double TA vs. 3to3 Snapshot Double TA vs. 5to5 Snapshot Double TA</li>
 				</ul>
 
 
@@ -500,9 +496,9 @@
 				We compare fan-out, funnel, and linear ensemble size architectures across a 2-stage intermediate distillation scheme.
 
 				<ul>
-					<li>3to5 Snapshot pipeline vs.</li>
-					<li>5to3 Snapshot pipeline vs.</li>
-					<li>4to4 Snapshot pipeline</li>
+					<li>3to5 Snapshot Double TA vs.</li>
+					<li>5to3 Snapshot Double TA vs.</li>
+					<li>4to4 Snapshot Double TA</li>
 
 				</ul>
 
@@ -538,19 +534,6 @@
 			pipelines.
 								
 		</div>
-		
-		<div style="margin-bottom: 16px;">
-			We compare each of the final distilled students to each other, as well as the two aforementioned baseline conditions. In
-			general, we use the following heuristics for each of the statistics to determine superior “student performance”:
-			Top1/Top5 accuracy, output agreement, area under the curve are directly proportional to student performance, while
-			calibration KL-divergence are inversely proportional.
-		</div>
-		
-		<div style="margin-bottom: 16px;">
-			While not all metrics are discussed in the results sections, we include a comprehensive report of these statistics in
-			the Appendix.
-		</div>
-
 		    </div>
 		</div>
 
