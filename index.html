@@ -29,7 +29,7 @@
 		border-left: 1px solid #DDD;
 		border-right: 1px solid #DDD;
 		padding: 8px 8px 8px 8px;
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;#"Avenir";
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", "Avenir", sans-serif;
 	}
 	.margin-left-block {
 			font-size: 14px;
@@ -38,11 +38,11 @@
 			position: relative;
 			margin-left: 10px;
 			text-align: left;
-			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;#"Avenir";
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", "Avenir", sans-serif;
 			padding: 5px;
 	}
 	.margin-right-block {
-			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;#"Avenir";
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", "Avenir", sans-serif;
 			font-size: 14px;
 			width: 25%; /* Change this percentage as needed */
 			max-width: 256px; /* Optional: Maximum width */
@@ -188,6 +188,9 @@
 			<meta charset="UTF-8">
   </head>
 
+
+<!-- ----------------------------CONTENT BEGINS HERE---------------------------- -->
+
   <body>
 
 		<div class="content-margin-container">
@@ -197,15 +200,18 @@
 						<table class="header" align=left>
 								<tr>
 									<td colspan=4>
-										<span style="font-size: 32px; font-family: 'Courier New', Courier, monospace; /* Adds fallbacks */">A Grand Unified Theory of Deep Learning</span>
+										<span style="font-size: 32px; font-family: 'Courier New', Courier, monospace; /* Adds fallbacks */">Snapshot-Guided Multi-Stage Knowledge Distillation: Unifying Teacher Assistants, Ensembles, and Selection Strategies </span>
 									</td>
 								</tr>
 								<tr>
 										<td align=left>
-												<span style="font-size:17px"><a href="your_website">Your name</a></span>
+												<span style="font-size:17px"><a href="https://www.linkedin.com/in/lachlan-lucky-deignan-055031251/">Lucky Deignan</a></span>
 										</td>
 										<td align=left>
-												<span style="font-size:17px"><a href="your_partner's_website">Your partner's name</a></span>
+												<span style="font-size:17px"><a href="https://www.linkedin.com/in/sean-huckleberry/">Sean Huckleberry</a></span>
+										</td>
+										<td align=left>
+												<span style="font-size:17px"><a href="https://www.linkedin.com/in/diegodelope/">Diego de Lope</a></span>
 										</td>
 								<tr>
 									<td colspan=4 align=left><span style="font-size:18px">Final project for 6.7960, MIT</span></td>
@@ -216,109 +222,447 @@
 					</div>
 		</div>
 
+
+
+
+		<div class="content-margin-container" id="none">
+			<div class="margin-left-block">
+				<!-- table of contents here -->
+				<div style="position:fixed; max-width:inherit; top:max(20%,120px)">
+					<b style="font-size:16px">Outline</b><br><br>
+					<a href="#intro">Introduction</a><br><br>
+					<a href="#background">Background</a><br><br>
+					<a href="#methodology">Methodology</a><br><br>
+					<a href="#results_and_discussion">Results and Discussion</a><br><br>
+					<a href="#conclusion">Conclusion</a><br><br>
+				</div>
+			</div>
+		    <div class="main-content-block">
+				<!--You can embed an image like this:-->
+				
+				<figure style="text-align:center;">
+					<img src="./images/1-generic-architecture.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+					<figcaption>Figure 1: Generic Architecture for varying number of stages, ensemble size, and selection algorithm.</figcaption>
+				</figure>
+				
+		    </div>
+		    <div class="margin-right-block">
+				Caption for the image.
+		    </div>
+		</div>
+		
+		
+		
+		<!-- 1. INTRODUCTION -->
 		<div class="content-margin-container" id="intro">
-				<div class="margin-left-block">
-          <!-- table of contents here -->
-          <div style="position:fixed; max-width:inherit; top:max(20%,120px)">
-              <b style="font-size:16px">Outline</b><br><br>
-              <a href="#intro">Introduction</a><br><br>
-              <a href="#does_x_do_y">Does X do Y?</a><br><br>
-              <a href="#implications_and_limitations">Implications and limitations</a><br><br>
-          </div>
-				</div>
-		    <div class="main-content-block">
-            <!--You can embed an image like this:-->
-            <img src="./images/your_image_here.png" width=512px/>
-		    </div>
-		    <div class="margin-right-block">
-						Caption for the image.
-		    </div>
+			<div class="margin-left-block">
+			</div>
+			<div class="main-content-block">
+				<h2>1. Introduction</h2>
+				As the demand for deploying deep learning models in edge and low-resource settings continues to rise, Knowledge
+				Distillation (KD) has become a central technique for enabling compact student networks to approximate the performance of
+				large teacher models. While KD provides implicit regularization by exposing the student to the teacher’s “dark
+				knowledge” through soft targets, the student remains inherently disadvantaged by a significant capacity gap. Approaches
+				such as Teacher Assistant Knowledge Distillation (TAKD), which introduces intermediate-sized models to smooth the
+				learning process, attempt to mitigate this discrepancy. Ensemble KD methods similarly improve the quality and stability
+				of the supervisory signal by aggregating multiple teacher predictions. In this work, we unify these ideas by leveraging
+				Snapshot Ensembles, using model checkpoints from a single training trajectory as a diversity-rich set of assistant
+				teachers. This framework preserves the benefits of multi-stage and multi-teacher KD without the overhead of training
+				additional models. Moreover, in a complementary experiment, we explore the role of the selection criteria used to
+				distill knowledge into students from multiple snapshot ensembles, paving way for future works to investigate the
+				integration of these selection criteria into our established TAKD & Ensemble pipelines. We evaluate our novel
+				distillation methodologies effects on student accuracy, generalization, and training efficiency on the CIFAR-100 dataset
+				using a WideResNet architecture.
+				
+			</div>
+			<div class="margin-right-block">
+				Margin note that clarifies some detail #main-content-block for intro section.
+			</div>
 		</div>
-
-    <div class="content-margin-container" id="intro">
+		
+		
+		<!-- 2. BACKGROUND -->
+		<div class="content-margin-container" id="background">
 				<div class="margin-left-block">
 				</div>
 		    <div class="main-content-block">
-						<h1>Introduction</h1>
-            Motivate your project. What question are you asking. Why is it unanswered so far? What gap in the literature or practice are you filling?
-            Why is it important?
-		    </div>
-		    <div class="margin-right-block">
-						Margin note that clarifies some detail #main-content-block for intro section.
-		    </div>
-		</div>
-
-		<div class="content-margin-container" id="does_x_do_y">
-				<div class="margin-left-block">
-				</div>
-		    <div class="main-content-block">
-					<h1>Does X do Y?</h1>
+					<h2>2. Background </h2>
 				  It is well known that Y does Y. And this has raised the question does X do Y? Because if Y does Y then it stands to reason that X does Y.
-          But we cannot answer this until we realize the Z implies Y and X can be linked to Z.<br><br>
+          But we cannot answer this until we realize the Z implies Y and X can be linked to Z.<br>
 
-          Now let's write some math!<br>
-          <center>
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-              <mrow>
-                <mrow>
-                  <mo>&#x2202;</mo>
-                  <mi>y</mi>
-                </mrow>
-                <mo>/</mo>
-                <mrow>
-                  <mo>&#x2202;</mo>
-                  <mi>x</mi>
-                </mrow>
-              </mrow>
-              <mo>=</mo>
-              <mi>x</mi>
-            </math>
-          </center>
-          <br>
-          It's probably best to ask an LLM to help do the web
-          formatting for math. You can tell it "convert this latex equation into MathML: $$\frac{\partial dy}{\partial dx} = x$$"
-          But it took me a few tries. So, if you get frustrated, you can embed an image of the equation, or use other packages for
-          rendering equations on webpages.
+		  <h3>2.1 Knowldege Distillation</h3>
+		  
+		  <h3>2.2 Intermediate Teacher Assistants</h3>
+		  <h3>2.3 Ensemble Distillation and Selection Strategies</h3>
+		  <h3>2.4 Single Model Ensembling</h3>
+
 		    </div>
 		    <div class="margin-right-block" style="transform: translate(0%, -100%);"> <!-- you can move the margin notes up and down with translate -->
           Interestingly, Plato also asked if X does Y, in <a href="#ref_1">[1]</a>.
 		    </div>
 		</div>
 
-		<div class="content-margin-container">
+
+
+
+
+		<!-- 3. METHODOLOGY -->
+		<div class="content-margin-container", id="methodology">
 				<div class="margin-left-block">
 				</div>
 		    <div class="main-content-block">
-            <h1>Another section</h1>
-            In this section we embed a video:
-						<video class='my-video' loop autoplay muted style="width: 725px">
-								<source src="./images/mtsh.mp4" type="video/mp4">
-						</video>
-		    </div>
-		    <div class="margin-right-block">
-					A caption for the video could go here.
+            <h2>3. Methodology</h2>
+		  <h3>3.1 Driving Research Questions and Hypotheses</h3>
+			We take an empirical approach to exploring the collective impact of multi-stage, snapshot ensemble, and selection
+			algorithm methods on knowledge distillation pipelines. As discussed in the background, existing literature has tackled
+			each of these methods individually, but we take the novel approach of considering how they interact with each other. To
+			this end, we conduct ablation studies, varying one parameter while holding the others constant, and then propose the
+			most effective architecture based on the results.
+
+			Our main driving research question is as follows: 
+			
+			<p style="text-align:center; font-style:italic;">
+				Our main driving research question is as follows: Given a fixed teacher-student pair of Wide ResNets on CIFAR-100, how
+				can we most effectively combine snapshot ensembles, multi-stage distillation, and multi-teacher selection algorithms to
+				maximize student performance under a fixed epoch budget for training the student model?
+			</p>
+
+			We present our central hypothesis, informed by a review of the relevant literature: 
+			
+			<p style="text-align:center; font-style:italic;">
+			H1: For a fixed teacher and student
+			architecture, appropriately combining snapshot-ensemble teachers across teacher-assistant stages, and a sample-aware
+			teacher selection scheme will improve student performance with comparable training cost relative to both vanilla
+			supervised training and single-teacher knowledge distillation.
+			</p>
+
+			Next, in our approach to evaluating this hypothesis, we propose a set of self-contained research questions. For
+			consistency in the rest of the literature, we consider our hypothesis to these research questions as H1.1, H1.2, H1.3,
+			respectively:
+
+
+			<ol>
+				<li>[Number of TA stages] How does the number of teacher-assistant stages affect student performance when using
+				snapshot-ensemble teachers?</li>
+				<li>[TA ensemble size] Given a fixed number of TA stages, how does the number of snapshot ensembles per TA stage affect
+				student performance?</li>
+				<li>[Fan-out vs. funnel architecture] For a fixed epoch training budget, is it better to use a fan-out architecture (larger
+				ensembles in later stages) or a funnel architecture (progressively narrowing in the number of TAs) for molti-stage KD?
+				[Teacher selection strategy] Among different multi-teacher ensemble selection strategies (i.e., uniform averaging,
+				entropy & accuracy based weighting, random selection, diversity selection, top-K pruning, per-sample confidence), which
+				yields the best student performance and calibration when distilling from a snapshot?</li>
+
+			</ol>
+
+		  <h3>3.2 Model, Task Selection, and Training</h3>
+		We elect to utilize a custom Wide Residual Network architecture for our models in applying knowledge distillation
+		towards image classification tasks on the CIFAR-100 dataset. Training was performed in Google Colab with NVIDIA A100
+		Tensor Core GPUs.
+
+		WideResNets extend the standard ResNet by introducing a widening factor that scales the number of channels in each
+		residual block while maintaining the same depth. This allows precise control over model capacity: we produce a large,
+		high-performing teacher and a much smaller student, as well as multiple intermediate “bridge” models, all within the
+		same architectural family. This choice is particularly suitable for our distillation experiments because:
+		<ul>
+			<li>It provides large capacity separation between teacher and student without changing the overall architecture</li>
+			<li>The depth parameter remains fixed, making width the primary knob for clean and continuous scaling. We scale width
+			instead of depth because widening preserves the same residual structure while increasing capacity, giving smoother
+			optimization, and more predictable scaling. Increasing width boosts representational capacity locally without increasing
+			the number of compositional transformations, which avoids the nonlinear complications that depth introduces.
+			</li>
+			<li>All models share the same residual learning behavior, which improves alignment for distillation.</li>
+			<li>WideResNet is well-established on CIFAR-100 and commonly used in KD/compression literature, enabling direct comparison.</li>
+		</ul>
+
+		CIFAR-100 is an image classification dataset consisting of 60,000 natural images across 100 fine-grained object
+		categories. The large number of visually similar classes creates a recognition problem much more difficult than
+		CIFAR-10, enabling larger separation between model performance. This dataset is well-suited for knowledge distillation
+		experiments because there is a clear accuracy gap between large and compact models, and the fine-grained class structure
+		allows distilled “soft” relationships from ensemble or snapshot teachers to benefit the student. It's also widely used
+		in the KD literature and computationally efficient.
+
+		That being said, our work is focused on knowledge distillation theory rather than the particular application. In other
+		words, while the CIFAR-100 image classification task presents an effective task for clean empirical testing, it is our
+		hope that our work applies more broadly to knowledge distillation across many tasks.
+
+
+		  <h3>3.3 Baselines</h3>
+		  <!-- TODO INSERT BASELINES -->
+		   yep
+
+			<div class="main-content-block">
+				<figure style="text-align:center;">
+					<img src="./images/1-generic-architecture.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+					<figcaption>Figure 1: Generic Architecture for varying number of stages, ensemble size, and selection algorithm.</figcaption>
+				</figure>
+
+			</div>
+
+
+		  <h3>3.4 Experiments</h3>
+		  <!-- TODO INSERT EXPERIMENTS -->
+				<h4>3.4.1 Number of TA stages (H1.1)</h4>
+				<h4>3.4.2 TA Ensemble Size (H1.2)</h4>
+				<h4>3.4.3 TA Distribution (H1.3)</h4>
+				<h4>3.4.4 Selection Algorithm (H1.4)</h4>
+		  <h3>3.5 Evaluation</h3>
+		We utilize a variety of metrics to analyze our final distilled student model, including Top1 Accuracy, Top5 Accuracy,
+		KL-divergence, Adaptive Expected Calibration Error (henceforth referred to as calibration), Student-Teacher Output
+		Agreement, and Area Under the Curve. Moreover, we apply these same statistics to each intermediary TA along both
+		pipelines.
+
+		We compare each of the final distilled students to each other, as well as the two aforementioned baseline conditions. In
+		general, we use the following heuristics for each of the statistics to determine superior “student performance”:
+		Top1/Top5 accuracy, output agreement, area under the curve are directly proportional to student performance, while
+		calibration KL-divergence are inversely proportional.
+
+		While not all metrics are discussed in the results sections, we include a comprehensive report of these statistics in
+		the Appendix.
+
+
 		    </div>
 		</div>
 
+
+
+		<!-- 4. RESULTS AND DISCUSSION -->
 		<div class="content-margin-container" id="implications_and_limitations">
 				<div class="margin-left-block">
 				</div>
 		    <div class="main-content-block">
-						<h1>Implications and limitations</h1>
+						<h2>4. Results and Discussion</h2>
+						We present a summary of our results structured around key findings.
+							<h3>4.1 Baseline</h3>
+
+							<h3>4.2 Single intermediate stage ensemble distillation significantly underperforms baseline KD, demonstrating that ensemble
+								diversity cannot be effectively absorbed in a single distillation step</h3>
+
+								<figure style="text-align:center;">
+									<img src="./images/2-top1-top5.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+									<figcaption>Figure 2: Top-1 and top-5 accuracies across all experiments. Top-1 accuracy indicates whether a model’s
+										highest
+										confidence logit matches the ground truth, while top-5 accuracy indicates whether any of the model’s 5 highest
+										confidence logits match the ground truth.</figcaption>
+								</figure>
+
+
+								Our empirical results demonstrate that, across accuracy (Figure 2), student-teacher alignment (Figure 3), and
+								calibration (Figure 4) metrics, an architecture containing a single intermediate TA ensemble stage significantly
+								underperforms baseline knowledge distillation. A potential mechanistic explanation for this result is that distilling a
+								high-diversity TA ensemble in a single stage forces the student to approximate conflicting probability modes without
+								intermediate alignment, leading to an unstable or incoherent supervisory signal.
+								
+								Adjacent results indicate that an architecture with two intermediate stages also produces inferior student performance
+								compared with baseline distillation, though performance converges more closely towards the baseline. Extrapolating these
+								results, we infer that the efficacy of ensemble-based knowledge transfer requires distillation across multiple stages.
+								
+								In other words, when training multi-stage snapshot ensemble pipelines, researchers must introduce a sufficient number of
+								intermediate stages to make the benefits worthwhile. If this is infeasible, it is preferable to use a direct
+								teacher-to-student distillation scheme without introducing any intermediate stages at all.
+
+					<figure style="text-align:center;">
+						<img src="./images/3-kl-divergences.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+						<figcaption>Figure 3: Student-Teacher KL divergence across all experiments, indicating the distributional agreement between final
+						student models and the teacher.</figcaption>
+					</figure>
+
+
+							<h3>4.3 Scaling the number of intermediate stages compared to TA ensemble size is more reliable in improving student
+							accuracy</h3>
+
+								Results in Figure 2 demonstrate that, within a given stage, scaling ensemble size has inconsistent impacts on student
+								accuracy. Concretely, for one intermediate stage, a snapshot ensemble size of 6 outperformed an ensemble size of 8,
+								while an ensemble size of 10 outperformed both 6 and 8. The lack of monotonicity of these results demonstrate to us that
+								performance improvements from scaling TA ensemble size require a deeper understanding of the contextual architecture.
+								Scaling blindly is unlikely to be effective.
+								
+								On the other hand, Figure 2 shows that pipelines with two intermediate stages strictly outperform pipelines with a
+								single intermediate stage with respect to student accuracy. These early results suggest that, in the context of
+								ensemble-based multi-stage distillation, scaling the number of intermediate stages might be a reliable way to improve
+								performance.
+								
+								The explanation for these results is multi-faceted. Potentially, fewer distillation steps cannot absorb the diversity of
+								teacher representations, whereas multi-stage pipelines progressively compress and align teacher posteriors, allowing the
+								student to internalize structural information in manageable increments. On the other hand, increasing snapshot ensemble
+								size can lead to a stage with many poorly-trained TAs, none of which have captured enough knowledge from the previous
+								stage to meaningful transfer to the student. We hypothesize that there is a sweet spot for ensemble size, in which the
+								TA's collectively capture more than what could be identified by a single TA, though this is an area for future work.
+								
+								At the bottom line, these results suggest that a researcher should choose to introduce more intermediate stages before
+								scaling ensemble size. Electing an effective ensemble size requires more complex empirical work, while increasing the
+								number of stages will more consistently yield better results, especially when scaling from a very small to medium number
+								of stages.
+
+							<h3>4.4 Funnel TA pipelines outperform linear and fan-out architectures on final student accuracy, BUT linear architectures
+							provide the best calibration</h3>
+
+								<figure style="text-align:center;">
+									<img src="./images/4-calibration.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+									<figcaption>Figure 4: Student Expected Calibration Error (ECE) across all experiments, indicating how well model confidence aligns
+									with actual correctness.</figcaption>
+								</figure>
+
+								The distribution of a constant number of TAs across multiple intermediate stages proposes an interesting problem,
+								central to effectively combining snapshot ensembles with multi-stage learning. Figure 2 indicates that, on the basis of
+								accuracy, for a pipeline with two intermediate stages, a funnel-like distribution of 5-3 TAs produces optimal student
+								accuracy compared with comparable distributions of 3-5, 3-3, 5-5 TAs. Conversely, Figure 4 suggests that a linear
+								distribution of 3-3 TAs performs optimally on calibration metrics.
+								
+								Clearly, there is a misalignment between student accuracy and model calibration with the ground truth. One mechanistic
+								explanation for these results is that funnel architectures reduce representational burden over stages, simplifying
+								knowledge transfer and improving accuracy; however, this compression also induces sharper posteriors and stronger
+								certainty, which reduces calibration. Conversely, the linear design maintains consistent representational complexity
+								across stages, enabling more stable uncertainty modeling even if this limits later-stage refinement of class boundaries.
+								As a consequence, different TA distributions across intermediate stages optimize different dimensions of model quality:
+								funnels improve raw predictive performance, whereas linear designs produce more reliable confidence estimates.
+								
+								This introduces a tradeoff. Researchers preferring models that emphasize reliability should select a linear TA
+								distribution across stages, while those encouraged by strong student accuracy, despite potential misalignments in their
+								model's reasoning, should opt for a funnel-like distribution.
+
+							<h3>4.5 Selection Algorithm</h3>
+
+							
+							<figure style="text-align:center;">
+								<img src="./images/5-accuracy-by-aggregation.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+								<figcaption>Figure 5: Test and Validation Accuracy of Student Model by Selection Strategy used during KD.</figcaption>
+							</figure>
+
+							<figure style="text-align:center;">
+								<img src="./images/6-train-accuracy.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+								<figcaption>Figure 6: Training Accuracy of Student Model by KD Selection Strategy across Training Epochs.</figcaption>
+							</figure>
+
+							<figure style="text-align:center;">
+								<img src="./images/7-calibration.png" style="max-width:100%; height:auto; display:block; margin:auto;">
+								<figcaption>Figure 7: Test Accuracy of Student Model by KD Selection Strategy across Training Epochs</figcaption>
+							</figure>
+
+
+								We found that for the specific case with a one stage TA with 6 snapshot ensembles at (depth=10, width factor=5,
+								num_epochs=40), diversity-based selection achieves the strongest performance, even slightly surpassing the vanilla
+								non-distilled student. This aligns with the intuition that selecting the snapshot whose predictions diverge most from
+								the ensemble mean exposes the student to complementary, non-redundant information, producing richer gradients and
+								improved generalization.
+
+								The random snapshot strategy, while competitive in early training, shows clear signs of overfitting: its training
+								accuracy climbs to the highest values among all methods, yet its test accuracy plateaus noticeably lower. This widening
+								train–test gap suggests that random selection injects high-variance, inconsistent teacher signals that the student
+								ultimately memorizes rather than generalizes from.
+
+								In contrast, entropy-weighted averaging, accuracy-weighted averaging, and uniform averaging perform poorly in this
+								setup. Since the snapshots originate from the same training trajectory and are therefore highly correlated, averaging or
+								weighting them without filtering for quality collapses meaningful distinctions and yields a diluted, low-information
+								supervisory signal. Per-sample confidence selection likewise underperforms, likely due to its granularity and tendency
+								to over-select overconfident but under-informative snapshots.
+
+								Across the testing accuracy curve, we observe a recognizable pattern: methods that preserve selective diversity
+								generally outperform those that smooth or homogenize the teacher distribution. This trend suggests that, unlike
+								classical multi-teacher ensembles composed of independently trained models, snapshot ensembles contain strong
+								intra-trajectory correlations and might benefit most from algorithms that actively retain or amplify diversity rather
+								than suppress it.
+
+		    </div>
+		    <div class="margin-right-block">
+		    </div>
+		</div>
+
+
+			<!-- 5. CONCLUSION -->
+		<div class="content-margin-container" id="implications_and_limitations">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+						<h2>5. Conclusion</h2>
+						We proposed a novel paradigm for Knowledge Distillation using a combination of two well-established methods for transfer
+						learning: TAKD and snapshot ensembling. Our study's results, while not demonstrating significant improvements of our
+						novel paradigm over traditional knowledge distillation methods, are limited by several constraints, particularly
+						concerning the number of snapshot ensembles for the intermediary TAs. This limitation stems from restrictions on time,
+						compute and inherent complexity of our methodology. In our current setup, incrementing the number of intermediary TAs to
+						include a trio-TA setup would double the number of models trained from the dual-TA experiment to cover all permutations
+						of TA & number of ensemble permutations. Similarly, incrementing the number of potential snapshots by one within the
+						dual-TA setup would increase the number of necessary training sessions from four to nine in this experiment. This is an
+						important limitation to consider as we discovered non-monotonic relationships in our empirical results – particularly
+						regarding accuracy and calibration in the single-TA experiment when varying the number of snapshots. Perhaps exploring
+						more hyperparameters would unveil a more distinct pattern as we increase the number of snapshots.
+						
+						Moreover, our study provides a paradigm for a variety of future works that integrate the various methods and pipelines
+						proposed in the study. For example, as we found that Diversity Selection yielded a higher student distillation accuracy
+						in H1.4, incorporating this into the existing ensemble pipelines may yield improved overall knowledge distillation
+						results. Moreover, there is still unexplored potential methodologies in integrating our methods with cross-architecture
+						distillations – for example CNN-teacher to Transformer-based student, or vice-versa.
+						
+						Finally, future work in our proposed paradigm should investigate its distillation efficacy for natural language
+						processing. While the current study focuses on a simple classification task on a foundational dataset, pioneering work
+						in knowledge distillation explores its role in compressing the computationally-intensive tasks of vision-language and
+						natural language processing [13]. Future work should be performed applying the complex methodology explored in this
+						study to these complex language tasks.
+
+		    </div>
+		    <div class="margin-right-block">
+		    </div>
+		</div>
+
+
+		<!-- 6. APPENDIX -->
+		<!-- <div class="content-margin-container" id="implications_and_limitations">
+				<div class="margin-left-block">
+				</div>
+		    <div class="main-content-block">
+						<h2>6. Appendix</h2>
 						Let's end with some discussion of the implications and limitations.
 		    </div>
 		    <div class="margin-right-block">
 		    </div>
 		</div>
+ -->
 
+
+
+		<!-- REFERENCES -->
 		<div class="content-margin-container" id="citations">
 				<div class="margin-left-block">
 				</div>
 		    <div class="main-content-block">
-						<div class='citation' id="references" style="height:auto"><br>
-							<span style="font-size:16px">References:</span><br><br>
-							<a id="ref_1"></a>[1] <a href="https://en.wikipedia.org/wiki/Allegory_of_the_cave">Allegory of the Cave</a>, Plato, c. 375 BC<br><br>
-							<a id="ref_2"></a>[2] <a href="">A Human-Level AGI</a>, OpenAI, 2025<br><br>
+						<h2>6. References</h2>
+
+						<div class='citation', style="height:auto"><br>
+
+							<a id="ref_1"></a>[1] <a href="https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network</a>, Hinton, Vinyals, and Dean, 2015<br><br>
+
+							<a id="ref_2"></a>[2] <a href="https://arxiv.org/abs/2503.12067">A Comprehensive Survey on Knowledge Distillation</a>, Mansourian et al., 2025<br><br>
+
+							<a id="ref_3"></a>[3] <a href="https://arxiv.org/abs/2412.09874">Can Students Beyond The Teacher? Distilling Knowledge from Teacher's Bias</a>, Zhang, Gao, Liu, Cheng, Zhang, and Chen, 2024<br><br>
+
+							<a id="ref_4"></a>[4] <a href="https://arxiv.org/abs/1910.01348">On the Efficacy of Knowledge Distillation</a>, Cho and Hariharan, 2019<br><br>
+
+							<a id="ref_5"></a>[5] <a href="https://arxiv.org/abs/1902.03393">Improved Knowledge Distillation via Teacher Assistant</a>, Mirzadeh et al., 2019<br><br>
+
+							<a id="ref_6"></a>[6] <a href="https://arxiv.org/abs/2009.08825">Densely Guided Knowledge Distillation using Multiple Teacher Assistants</a>, Son, Na, Choi, and Hwang, 2021<br><br>
+
+							<a id="ref_7"></a>[7] <a href="https://doi.org/10.1007/s11263-021-01453-z">Knowledge Distillation: A Survey</a>, Gou, Yu, Maybank, and Tao, 2021<br><br>
+
+							<a id="ref_8"></a>[8] <a href="https://arxiv.org/abs/2012.09816">Towards Understanding Ensemble, Knowledge Distillation and Self-Distillation in Deep Learning</a>, Allen-Zhu and Li, 2023<br><br>
+
+							<a id="ref_9"></a>[9] <a href="https://doi.org/10.1145/3097983.3098135">Learning from Multiple Teacher Networks</a>, You, Xu, Xu, and Tao, 2017<br><br>
+
+							<a id="ref_10"></a>[10] <a href="https://arxiv.org/abs/1610.05755">Semi-supervised Knowledge Transfer for Deep Learning from Private Training Data</a>, Papernot, Abadi, Erlingsson, Goodfellow, and Talwar, 2017<br><br>
+
+							<a id="ref_11"></a>[11] <a href="https://doi.org/10.21437/Interspeech.2017-614">Efficient Knowledge Distillation from an Ensemble of Teachers</a>, Fukuda, Suzuki, Kurata, Thomas, Cui, and Ramabhadran, 2017<br><br>
+
+							<a id="ref_12"></a>[12] <a href="https://arxiv.org/abs/2201.00007">Confidence-Aware Multi-Teacher Knowledge Distillation</a>, Zhang, Chen, and Wang, 2022<br><br>
+
+							<a id="ref_13"></a>[13] <a href="https://arxiv.org/abs/2209.07606">CES-KD: Curriculum-based Expert Selection for Guided Knowledge Distillation</a>, Amara, Ziaeefard, Meyer, Gross, and Clark, 2022<br><br>
+
+							<a id="ref_14"></a>[14] <a href="https://arxiv.org/abs/2012.06048">Reinforced Multi-Teacher Selection for Knowledge Distillation</a>, Yuan, Shou, Pei, Lin, Gong, Fu, and Jiang, 2020<br><br>
+
+							<a id="ref_15"></a>[15] <a href="https://arxiv.org/abs/1610.09650">Deep Model Compression: Distilling Knowledge from Noisy Teachers</a>, Sau and Balasubramanian, 2016<br><br>
+
+							<a id="ref_16"></a>[16] <a href="https://doi.org/10.23919/Eusipco47968.2020.9287227">Stochasticity and Skip Connection Improve Knowledge Transfer</a>, Nguyen, Lee, and Shim, 2021<br><br>
+
+							<a id="ref_17"></a>[17] <a href="https://arxiv.org/abs/1608.03983">SGDR: Stochastic Gradient Descent with Warm Restarts</a>, Loshchilov and Hutter, 2017<br><br>
+
+
 						</div>
 		    </div>
 		    <div class="margin-right-block">
